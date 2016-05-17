@@ -17,18 +17,15 @@ namespace FibonacciGenerator
             _mostPreviousNumber = 0;
         }
 
-        public List<int> Generate(int numberOfItems)
+        public List<int> Generate(int numberOfRequestedItems)
         {
-            ValidateNumberOfItems(numberOfItems);
+            ValidateNumberOfRequestedItems(numberOfRequestedItems);
 
-            List<int> items = new List<int>(numberOfItems);
-            items.Add(_mostPreviousNumber);
-            items.Add(_immediatelyPreviousNumber);
-            items.Add(_currentNumber);
+            List<int> items = new List<int>(numberOfRequestedItems) { _mostPreviousNumber, _immediatelyPreviousNumber, _currentNumber };
             _mostPreviousNumber = 1;
             _immediatelyPreviousNumber = 1;
 
-            for (int i = 0; i < numberOfItems; i++)
+            for (int i = 0; i < numberOfRequestedItems; i++)
             {
                 _currentNumber = _immediatelyPreviousNumber + _mostPreviousNumber;
 
@@ -38,17 +35,17 @@ namespace FibonacciGenerator
                 _immediatelyPreviousNumber = _currentNumber;
             }
 
-            return items.Take(numberOfItems).ToList();
+            return items.Take(numberOfRequestedItems).ToList();
         }
 
-        private void ValidateNumberOfItems(int numberOfItems)
+        private void ValidateNumberOfRequestedItems(int numberOfRequestedItems)
         {
-            if (numberOfItems < 8)
+            if (numberOfRequestedItems < 8)
             {
                 throw new InputTooShortException("Input cannot be less than 8");
             }
 
-            if (numberOfItems > 50)
+            if (numberOfRequestedItems > 50)
             {
                 throw new InputTooLongException("Input cannot be greater than 50");
             }
